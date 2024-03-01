@@ -557,18 +557,23 @@ static Platform::Path FindLocalResourceDir() {
     }
     free(expandedSelfPath);
 
-    Platform::Path resourceDir;
     if(selfPath.IsEmpty()) {
         // We don't know how to find the local resource directory on this platform,
         // so use the global one (by returning an empty string).
         return Path::From(UNIX_DATADIR);
-    } else {
-        resourceDir = selfPath.Parent().Parent().Join("res");
     }
 
     struct stat st;
+    Platform::Path resourceDir;
+    resourceDir = selfPath.Parent().Join("res");
     if(stat(resourceDir.raw.c_str(), &st) != -1) {
         // An executable-adjacent resource directory exists, good.
+        return resourceDir;
+    }
+
+    resourceDir = selfPath.Parent().Parent().Join("res");
+    if(stat(resourceDir.raw.c_str(), &st) != -1) {
+        // A resource directory exists in the parent directory.
         return resourceDir;
     }
 
