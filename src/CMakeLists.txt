@@ -299,7 +299,7 @@ if(ENABLE_GUI)
     endif()
 
     # Platform-specific
-    if(WIN32)
+    if(WIN32 AND NOT USE_QT_GUI)
         target_sources(solvespace PRIVATE
             platform/guiwin.cpp)
 
@@ -376,7 +376,7 @@ if(ENABLE_GUI)
             ${FONTCONFIG_LIBRARY_DIRS})
         target_link_libraries(solvespace PRIVATE
             ${FONTCONFIG_LIBRARIES}
-            Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL)
+            Qt5::Core Qt5::Gui Qt5::Widgets)
     else()
         target_sources(solvespace PRIVATE
             platform/guigtk.cpp)
