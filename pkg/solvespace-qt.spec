@@ -3,15 +3,9 @@ Version:   3.1
 Summary:   A parametric 3D CAD tool
 URL:       https://solvespace.com/
 Source0:   https://github.com/WickedSmoke/solvespace_qt5/releases/download/v%{version}-qt/solvespace_qt-%{version}.tar.gz
-%if "%{_vendor}" == "debbuild"
-Release:   0%{?dist}
-License:   GPL-3.0+
-BuildRequires: g++, cmake, qtbase5-dev, libeigen3-dev, libfontconfig-dev, libfreetype-dev, libpng-dev, zlib1g-dev, libgl1-mesa-dev, libglu1-mesa-dev
-%else
 Release:   %autorelease
 License:   GPL-3.0-or-later
 BuildRequires: g++, cmake, qt5-qtbase-devel, eigen3-devel, fontconfig-devel, freetype-devel, libpng-devel, zlib-devel, mesa-libGL-devel, mesa-libGLU-devel
-%endif
 
 %global debug_package %{nil}
 
