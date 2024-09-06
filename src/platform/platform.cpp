@@ -468,7 +468,11 @@ bool WriteFile(const Platform::Path &filename, const std::string &data) {
 #if defined(WIN32)
 
 const void *LoadResource(const std::string &name, size_t *size) {
+#ifdef _MSC_VER
     HRSRC hres = FindResourceW(NULL, Widen(name).c_str(), RT_RCDATA);
+#else
+    HRSRC hres = FindResourceA(NULL, name.c_str(), RT_RCDATA);
+#endif
     ssassert(hres != NULL, "Cannot find resource");
     HGLOBAL res = ::LoadResource(NULL, hres);
     ssassert(res != NULL, "Cannot load resource");

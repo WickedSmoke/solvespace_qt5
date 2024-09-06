@@ -1044,6 +1044,9 @@ int main(int argc, char** argv) {
     // Must share GL contexts or an undocked QDockWidget is black.
     // See https://bugreports.qt.io/browse/QTBUG-89812
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+#ifdef _WIN32
+    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
+#endif
 
     Platform::SSApplication app(argc, argv);
     Platform::Open3DConnexion();

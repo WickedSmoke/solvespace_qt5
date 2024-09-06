@@ -4,6 +4,17 @@ default [
         %src/platform
         %extlib/eigen
     ]
+    win32 [
+        ; Fedora rpms:
+        ;   mingw64-angleproject-static
+        ;   mingw64-freetype-static
+        ;   mingw64-libpng-static
+        include_from [
+            %extlib/angle/include
+            %extlib/mimalloc/include
+        ]
+        cxxflags "-D_USE_MATH_DEFINES -DWIN32"
+    ]
     cxxflags "-fpermissive -Wno-unused-parameter"
     if ne? qt-version 6 [
         cxxflags "-std=c++11"
@@ -40,9 +51,12 @@ lib %slvs [
 ]
 
 lib %solvespace-core [
-    include_from [
-        %extlib/libdxfrw
-        %/usr/include/freetype2
+    include_from %extlib/libdxfrw
+    linux [
+        include_from %/usr/include/freetype2
+    ]
+    win32 [
+        include_from %/usr/x86_64-w64-mingw32/sys-root/mingw/include/freetype2
     ]
     sources_from %src [
         %bsp.cpp
@@ -106,8 +120,16 @@ exe %solvespace-qt [
     ]
     opengl
     libs_from %. [%solvespace-core %slvs]
-    libs_from %kr-build/bin [%dxfrw]
-    libs [%mimalloc %freetype %png %z]
+    linux [
+        libs_from %kr-build/bin [%dxfrw]
+        libs [%mimalloc %freetype %png %z]
+    ]
+    win32 [
+        libs_from %extlib/libdxfrw [%dxfrw]
+        libs_from %extlib/mimalloc [%mimalloc %bcrypt]
+        libs [%EGL %GLESv2 %freetype %png %z]
+        sources [%res/resources.rc]
+    ]
     sources_from %src [
         %solvespace.cpp
         %platform/guiqt.cpp
