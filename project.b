@@ -15,7 +15,7 @@ default [
         ]
         cxxflags "-D_USE_MATH_DEFINES -DWIN32"
     ]
-    cxxflags "-fpermissive -Wno-unused-parameter"
+    cxxflags "-fpermissive -Wno-unused-parameter -Wno-deprecated-copy"
     if ne? qt-version 6 [
         cxxflags "-std=c++11"
     ]
@@ -33,6 +33,15 @@ ifn exists? %src/config.h [
     #define HAVE_OPENGL 3
     #endif
     }}
+]
+
+lib %dxfrw [
+    include_from [
+        %extlib/libdxfrw
+        %extlib/libdxfrw/intern
+    ]
+    sources_from %extlib/libdxfrw %.cpp
+    sources_from %extlib/libdxfrw/intern %.cpp
 ]
 
 lib %slvs [
@@ -119,13 +128,11 @@ exe %solvespace-qt [
         qt [widgets opengl]
     ]
     opengl
-    libs_from %. [%solvespace-core %slvs]
+    libs_from %. [%solvespace-core %slvs %dxfrw]
     linux [
-        libs_from %kr-build/bin [%dxfrw]
         libs [%mimalloc %freetype %png %z]
     ]
     win32 [
-        libs_from %extlib/libdxfrw [%dxfrw]
         libs_from %extlib/mimalloc [%mimalloc %bcrypt]
         libs [%EGL %GLESv2 %freetype %png %z]
         sources [%res/resources.rc]
