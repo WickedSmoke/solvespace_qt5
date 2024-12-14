@@ -2,7 +2,8 @@ Name:      solvespace-qt
 Version:   3.1
 Summary:   A parametric 3D CAD tool
 URL:       https://solvespace.com/
-Source0:   https://github.com/WickedSmoke/solvespace_qt5/releases/download/v%{version}-qt/solvespace_qt-%{version}.tar.gz
+Source0:   https://github.com/WickedSmoke/solvespace_qt5/archive/refs/tags/v3.1-qt2.tar.gz
+Source1:   https://github.com/WickedSmoke/solvespace_qt5/releases/download/v3.1-qt2/solvespace_qt_extlib-3.1.tar.gz
 Release:   %autorelease
 License:   GPL-3.0-or-later
 BuildRequires: g++, cmake, qt5-qtbase-devel, eigen3-devel, fontconfig-devel, freetype-devel, libpng-devel, zlib-devel, mesa-libGL-devel, mesa-libGLU-devel
@@ -22,8 +23,9 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 This package contains the SolveSpace C++ library and header.
 
 %prep
-%setup -q -n solvespace_qt-%{version}
-sed -e 's/include(GetGit/# include(GetGit/' -e 's/# set(GIT.*/set(GIT_COMMIT_HASH 01d543e6)/' -i CMakeLists.txt
+%setup -q -n solvespace_qt5-3.1-qt2
+%setup -T -D -a 1 -n solvespace_qt5-3.1-qt2
+sed -e 's/include(GetGit/# include(GetGit/' -e 's/# set(GIT.*/set(GIT_COMMIT_HASH d3ec8624)/' -i CMakeLists.txt
 
 %build
 %cmake -DUSE_QT_GUI=ON -DENABLE_CLI=OFF -DENABLE_TESTS=OFF

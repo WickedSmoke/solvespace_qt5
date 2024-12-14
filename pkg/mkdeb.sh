@@ -4,7 +4,8 @@
 
 ID=ss_deb
 BTOP=/home/build/debbuild
-SARC=solvespace_qt-3.1.tar.gz
+# SARC=solvespace_qt-3.1.tar.gz
+SARC=v3.1-qt2.tar.gz
 PKG=solvespace-qt_3.1-0debian12_amd64.deb
 
 if [ ! -s /tmp/$SARC ]; then
@@ -15,5 +16,6 @@ debspec.b solvespace-qt.spec >/tmp/solvespace-qt.spec
 #podman run -d -it --name=$ID dev/debian12 /bin/bash || exit
 podman cp /tmp/solvespace-qt.spec $ID:/tmp
 podman cp /tmp/$SARC $ID:$BTOP/SOURCES
+podman cp /tmp/solvespace_qt_extlib-3.1.tar.gz $ID:$BTOP/SOURCES
 podman exec -it $ID debbuild -bb /tmp/solvespace-qt.spec || exit
 podman cp $ID:$BTOP/DEBS/amd64/$PKG /tmp
