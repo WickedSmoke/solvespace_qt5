@@ -541,9 +541,11 @@ SSView::SSView(QWidget* parent) : QOpenGLWidget(parent) {
     pixelRatio = pixelRatioI = 1.0;
 }
 
-void SSView::startEditing(int x, int y, int fontHeight, int minWidth,
+void SSView::startEditing(double xd, double yd, int fontHeight, int minWidth,
                           bool isMonoSpace, const std::string& val)
 {
+    int x = int(xd / pixelRatio);
+    int y = int(yd / pixelRatio);
     //printf("startEditing %d,%d, %d,%d %d\n", x, y, fontHeight, minWidth, isMonoSpace);
 
     SSApplication* app = static_cast<SSApplication*>(qApp);

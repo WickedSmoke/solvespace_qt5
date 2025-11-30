@@ -29,7 +29,7 @@ class SSView : public QOpenGLWidget
 public:
     SSView(QWidget* parent = 0);
 
-    void startEditing(int x, int y, int fontHeight, int minWidth,
+    void startEditing(double xd, double yd, int fontHeight, int minWidth,
                       bool isMonoSpace, const std::string& val);
     void stopEditing();
 
