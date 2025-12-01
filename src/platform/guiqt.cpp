@@ -1034,7 +1034,8 @@ void OpenInBrowser(const std::string& url) {
 }
 
 void ExitGui() {
-    qApp->quit();
+    // Using exit() rather than quit() to avoid calling window closeEvent() methods.
+    qApp->exit();
 }
 
 }
