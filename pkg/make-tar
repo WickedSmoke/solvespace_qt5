@@ -1,0 +1,25 @@
+# Create release tarball.  Use -l option to include only Linux extlib.
+
+VERSION=3.2
+GIT_URL=https://github.com/solvespace/solvespace.git
+BRANCH=master
+
+ADIR=solvespace-${VERSION}
+if [ "$1" = -l ]; then
+	GIT_ARG='--depth 5'
+else
+	GIT_ARG='--depth 5 --recurse-submodules --shallow-submodules'
+fi
+
+rm -rf /tmp/${ADIR}
+git clone -b ${BRANCH} ${GIT_ARG} ${GIT_URL} /tmp/${ADIR}
+cd /tmp/${ADIR}
+if [ "$1" = -l ]; then
+	git submodule update --init extlib/libdxfrw extlib/mimalloc
+fi
+HASH=$(git rev-parse HEAD)
+sed -e '6,11d' \
+	-e 's/^\(include(GetGitCommitHash)\)/#\1/' \
+	-e 's/^# \(set(GIT_COMMIT_HASH\).*/\1 '"$HASH"')/' \
+	-i /tmp/${ADIR}/CMakeLists.txt
+tar cJf /tmp/${ADIR}.tar.xz -C /tmp --exclude-vcs ${ADIR}
