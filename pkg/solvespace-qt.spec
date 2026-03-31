@@ -4,7 +4,7 @@ Release:   %autorelease
 Summary:   A parametric 3D CAD tool
 License:   GPL-3.0-or-later
 URL:       https://solvespace.com/
-Source0:   https://github.com/WickedSmoke/solvespace_qt5/releases/download/v3.2-qt/solvespace-%{version}.tar.xz
+Source0:   https://github.com/WickedSmoke/solvespace_qt5/releases/download/v3.2/solvespace-%{version}.tar.xz
 BuildRequires: g++, cmake, qt6-qtbase-devel, eigen3-devel, fontconfig-devel, freetype-devel, libpng-devel, zlib-devel, mesa-libGL-devel mesa-libGLU-devel
 
 %global debug_package %{nil}
@@ -23,6 +23,7 @@ This package contains the SolveSpace C++ library and header.
 
 %prep
 %setup -q -n solvespace-%{version}
+sed -i '/thumbnailer/d' res/CMakeLists.txt
 
 %build
 %cmake -DUSE_QT_GUI=ON -DENABLE_CLI=OFF -DENABLE_TESTS=OFF
