@@ -14,8 +14,9 @@ fi
 rm -rf /tmp/${ADIR}
 git clone -b ${BRANCH} ${GIT_ARG} ${GIT_URL} /tmp/${ADIR}
 cd /tmp/${ADIR}
+# git checkout 3e5873e6
 if [ "$1" = -l ]; then
-	git submodule update --init extlib/libdxfrw extlib/mimalloc
+	git submodule update --init extlib/libdxfrw extlib/mimalloc extlib/eigen
 fi
 HASH=$(git rev-parse HEAD)
 sed -e '6,11d' \
