@@ -1,20 +1,21 @@
 # Create release tarball.  Use -l option to include only Linux extlib.
 
-VERSION=3.2
+VERSION=3.3
 GIT_URL=https://github.com/solvespace/solvespace.git
 BRANCH=master
 
 ADIR=solvespace-${VERSION}
 if [ "$1" = -l ]; then
-	GIT_ARG='--depth 5'
+	GIT_ARG='--depth 80'
 else
-	GIT_ARG='--depth 5 --recurse-submodules --shallow-submodules'
+	GIT_ARG='--depth 80 --recurse-submodules --shallow-submodules'
 fi
 
 rm -rf /tmp/${ADIR}
 git clone -b ${BRANCH} ${GIT_ARG} ${GIT_URL} /tmp/${ADIR}
 cd /tmp/${ADIR}
-# git checkout 3e5873e6
+git checkout 30e1c3ac	#VERSION
+
 if [ "$1" = -l ]; then
 	git submodule update --init extlib/libdxfrw extlib/mimalloc extlib/eigen
 fi

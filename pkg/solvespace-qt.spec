@@ -1,10 +1,10 @@
 Name:      solvespace-qt
-Version:   3.2
+Version:   3.3
 Release:   %autorelease
 Summary:   A parametric 3D CAD tool
 License:   GPL-3.0-or-later
 URL:       https://solvespace.com/
-Source0:   https://github.com/WickedSmoke/solvespace_qt5/releases/download/v3.2/solvespace-%{version}.tar.xz
+Source0:   https://github.com/WickedSmoke/solvespace_qt5/releases/download/v3.3/solvespace-%{version}.tar.xz
 BuildRequires: g++, cmake, qt6-qtbase-devel, eigen3-devel, fontconfig-devel, freetype-devel, libpng-devel, zlib-devel, mesa-libGL-devel mesa-libGLU-devel
 
 %global debug_package %{nil}
@@ -48,7 +48,7 @@ rm -rf %{buildroot}
 
 %files devel
 %{_includedir}/slvs.h
-%{_libdir}/libslvs.so.3.2
+%{_libdir}/libslvs.so.3.3
 %{_libdir}/libslvs.so.1
 %{_libdir}/libslvs.so
 
